@@ -8,3 +8,5 @@
 double** R;	// Position
 double** V;	// Velocity
 double** F; 	// Force
+double* phi;    // Orientation
+double* theta;  // Orientation

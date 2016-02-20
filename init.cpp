@@ -8,7 +8,7 @@
 using namespace std;
 
 // Pseudo random number generator with Mersenne Twister algorithm
-MTRand randi;
+MTRand randi2;
 
 // Variables for initVelocities()
 double *sumv = new double [dim];	// COM velocity
@@ -22,6 +22,7 @@ void initialize(){
 	V = new double* [N];	// Velocities
 	F = new double* [N];	// Forces 
 	phi = new double[N]; 	// Orientation
+    theta = new double[N];
 	
 	// Define global variable L - the length of box
 	L = pow(N/rho, 1.0/dim);	
@@ -31,9 +32,16 @@ void initialize(){
 		V[i] = new double[dim];
 		F[i] = new double[dim];
 	}
+    
+    for (int n = 0; n < N; n++) {
+        for (int d = 0; d < dim; d++) {
+            F[n][d] = 0.;
+        }
+    }
 
 	for (int i=0; i<N; i++){
-		phi[i] = 2*PI*randi.rand();
+		phi[i] = 2*PI*randi2.rand();
+        //theta[i] = PI*randi2.rand();
 	}
 
 	initPositions();	// Populate r array in cubic lattice
@@ -103,7 +111,7 @@ void initVelocities(){
 
 	// Initialize the PRNG with time
    	unsigned int saat = (unsigned int)time(0);
-   	randi.seed(saat);
+   	randi2.seed(saat);
 
 	sumv[0] = 0; sumv[1] = 0;
 
@@ -111,7 +119,7 @@ void initVelocities(){
 	for (int i = 0; i<N; i++){
 		for (int k = 0; k<dim; k++){
 			// Random number between -0.5 and 0.5 for all components
-			V[i][k] = randi.rand()-0.5;	
+			V[i][k] = randi2.rand()-0.5;
 		}
 	
 		for (int k = 0; k<dim; k++){
@@ -134,7 +142,7 @@ void initVelocities(){
 	sumv2 = sumv2/N;
 
 	// Scale factor of velocities
-	double fs = sqrt(2*T/sumv2);
+	double fs = sqrt(2*kT/sumv2);
 		
 	// Scale velocities appropriately
 	for (int i = 0; i<N; i++){

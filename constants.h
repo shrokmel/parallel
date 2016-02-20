@@ -2,23 +2,30 @@
 
 #pragma once
 
-extern int dt;		// Time Step
-extern int total_steps;	// Total Steps
+extern double dt;		// Time Step
+extern double total_steps;	// Total Steps
+extern int nsamp;       // Sampling rate
 extern int N;		// Number of particles 
 extern int dim;		// Dimensions
-
+extern double m;
+extern double rho;
+extern double L;
 
 // Diffusion
-extern double gam=10;
-extern double kT=1.0;
-extern double Dr=0.01;
-extern double Dt=kT/gam;
- 		 
+extern double gam;
+extern double kT;
+extern double Dr;
+extern double Dt;
+
 // Lennard Jones
-extern double eps=1.0;
-extern double sig=1.0;
-extern double eps48=48.0*eps;
-extern double sig2=sig*sig;
-extern double rcut=2.5*sig;
-extern double rcut2=rcut*rcut;
- 		
+extern double eps;
+extern double sig;
+extern double eps48;
+extern double sig2;
+extern double rcut;
+extern double rcut2;
+
+// Self propulsion
+extern double Fmc;
+
+
