@@ -7,4 +7,5 @@ extern double** R;	// Position
 extern double** V;	// Velocity
 extern double** F;	// Force
 extern double* phi;
+extern double* theta;
 
