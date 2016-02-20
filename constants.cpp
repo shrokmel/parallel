@@ -11,7 +11,7 @@ int nsamp = 1e+3;     // Sampling rate
 int N=100;        	// Number of particles
 int dim=3;		// Dimensions
 double m=1.0;		// mass
-double rho=0.01;		// density
+double rho=0.5;		// density
 double L;        // boxsize
 
 // Diffusion
