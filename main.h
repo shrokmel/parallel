@@ -1,7 +1,9 @@
 //main.h
 
 #pragma once
+
 #define PI M_PI
+
 #include <iostream>
 #include <fstream>
 #include <cmath>

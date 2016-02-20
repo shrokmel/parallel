@@ -5,8 +5,8 @@
 
 #include "main.h"
 
-double** R;	// Position
-double** V;	// Velocity
+double** R;     // Position
+double** V;     // Velocity
 double** F; 	// Force
-double* phi;    // Orientation
-double* theta;  // Orientation
+double* phi;    // Azimuthal angle [0, 2pi)
+double* theta;  // Polar angle [0, pi)

@@ -11,7 +11,6 @@ using namespace std;
 
 MTRand randi;
 
-///////////////////////////////////////////////////////
 // Get gaussian random number for mu=0, sigma=1
 
 inline double get_ran_gaussian(MTRand& randi)
@@ -39,9 +38,8 @@ inline double get_ran_gaussian(MTRand& randi)
   return a1*p;
 }
 
-///////////////////////////////////////////////////////
 // Get gaussian random number for arbitrary mu,sigma
-inline double get_ran_gaussian(double mu, double sigma)
+inline double get_ran_gaussian(MTRand& randi, double mu, double sigma)
 
 {
   double a1 = 0.;
@@ -74,7 +72,8 @@ inline double get_ran_gaussian(double mu, double sigma)
 int main()
 {
     
-    ofstream fp("coords.xyz");
+    ofstream fp("Output/coords.xyz");
+    
 	// Initialize
 	initialize();
 
@@ -102,44 +101,37 @@ int main()
                 F[n][d] = 0.;
             }
         }
-//        
-//        // Force Calculation
-//		for (int n1=0; n1<(N-1); n1++){
-//			for (int n2=n1+1; n2<N; n2++){
-//                double dx = R[n1][0]-R[n2][0];
-//                dx -= L*dnearbyint( dx/L );
-//                double dy = R[n1][1]-R[n2][1];
-//                dy -= L*dnearbyint( dy/L );
-//                double dz = R[n1][2]-R[n2][2];
-//                dz -= L*dnearbyint( dz/L );
-//                
-//                double dr2 = dx*dx + dy*dy + dz*dz;
-//                if (dr2<rcut2){
-//                    
-//                    double p3 = sig2/dr2;
-//                    p3 = p3*p3*p3;
-//                    double tempFx = eps48*(p3*p3 - p3/2.)*dx/dr2;
-//                    double tempFy = eps48*(p3*p3 - p3/2.)*dy/dr2;
-//                    double tempFz = eps48*(p3*p3 - p3/2.)*dz/dr2;
-//                    
-//                    
-//                    F[n1][0] += tempFx;
-//                    F[n1][1] += tempFy;
-//                    F[n1][2] += tempFz;
-//                    
-//                    F[n2][0] -= tempFx;
-//                    F[n2][1] -= tempFy;
-//                    F[n2][2] -= tempFz;
-//                }
-//			}
-//		}
         
-//        for (int n = 0; n < N; n++) {
-//            F[n][0] -= gam*V[n][0];
-//            F[n][1] -= gam*V[n][1];
-//            F[n][2] -= gam*V[n][2];
-//        }
-        
+        // Force Calculation
+		for (int n1=0; n1<(N-1); n1++){
+			for (int n2=n1+1; n2<N; n2++){
+                double dx = R[n1][0]-R[n2][0];
+                dx -= L*dnearbyint( dx/L );
+                double dy = R[n1][1]-R[n2][1];
+                dy -= L*dnearbyint( dy/L );
+                double dz = R[n1][2]-R[n2][2];
+                dz -= L*dnearbyint( dz/L );
+                
+                double dr2 = dx*dx + dy*dy + dz*dz;
+                if (dr2<rcut2){
+                    
+                    double p3 = sig2/dr2;
+                    p3 = p3*p3*p3;
+                    double tempFx = eps48*(p3*p3 - p3/2.)*dx/dr2;
+                    double tempFy = eps48*(p3*p3 - p3/2.)*dy/dr2;
+                    double tempFz = eps48*(p3*p3 - p3/2.)*dz/dr2;
+                    
+                    
+                    F[n1][0] += tempFx;
+                    F[n1][1] += tempFy;
+                    F[n1][2] += tempFz;
+                    
+                    F[n2][0] -= tempFx;
+                    F[n2][1] -= tempFy;
+                    F[n2][2] -= tempFz;
+                }
+			}
+		}
         
         for (int n = 0; n < N; n++) {
             F[n][0] += Fmc*sin(theta[n])*cos(phi[n]) - gam*V[n][0];
